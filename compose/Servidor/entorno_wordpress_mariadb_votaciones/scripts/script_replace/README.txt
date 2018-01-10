@@ -1,1 +1,0 @@
-Si el portal WordPress no se despliega de forma que sea accesible desde http://localhost/splc, es necesario ejecutar este script sobre el esquema splc2017 para que funcione en la nueva URL en la que se encuentre desplegado.
