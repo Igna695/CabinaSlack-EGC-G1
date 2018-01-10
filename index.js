@@ -1,8 +1,9 @@
 var RtmClient = require('@slack/client').RtmClient;
 var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 var RTM_EVENTS = require('@slack/client').RTM_EVENTS;
+global.token = require('./token');
 
-var rtm = new RtmClient('xoxb-286616952819-fWqNW0qMRwfpbDlTRhmVZKs9');
+var rtm = new RtmClient(global.token);
 rtm.start();
 
 let channel;
