@@ -1,0 +1,1 @@
+Entorno docker Tomcat, listo para añadirle proyectos en la carpeta war.

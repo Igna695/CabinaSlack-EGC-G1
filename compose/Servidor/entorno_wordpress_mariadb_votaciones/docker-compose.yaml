@@ -1,0 +1,81 @@
+version: "2"
+services:
+  ## MARIADB ##
+  g1_mariadb:
+    image: 'mariadb:10.1'
+    container_name: g1_mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: splc2017
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes: 
+      - ./db_dump:/docker-entrypoint-initdb.d
+      - db_data_g1_mariadb:/var/lib/mysql
+
+  ## WORDPRESS ##
+  g1_wordpress:
+    links:
+      - g1_mariadb:mysql
+    image: wordpress
+    container_name: g1_wordpress
+    working_dir: /var/www/html
+    volumes:
+      - ./wp-content/:/var/www/html/wp-content
+    environment:
+      VIRTUAL_HOST: g1wordpress.egc.duckdns.org
+      LETSENCRYPT_HOST: g1wordpress.egc.duckdns.org
+      LETSENCRYPT_EMAIL: migbancar@alum.us.es
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_HOST: g1_mariadb:3306
+      WORDPRESS_DB_NAME: splc2017
+  
+  ## CONTENEDOR DESPLIEGUE ##
+  # URI de acceso /deploy/{id_contenedor}
+  g1_despliegue:
+    image: mabanos/despliegue_egc
+    container_name: g1_despliegue
+    environment:
+      VIRTUAL_HOST: g1despliegue.egc.duckdns.org
+      LETSENCRYPT_HOST: g1despliegue.egc.duckdns.org
+      LETSENCRYPT_EMAIL: migbancar@alum.us.es
+
+  ## LOGIN ##
+  # URI de acceso /login
+  g1_login:
+    image: 'alejandrohall/login_egc'
+    container_name: g1_login
+    links:
+      - g1_mariadb:mysql
+    environment:
+      VIRTUAL_HOST: g1login.egc.duckdns.org
+      LETSENCRYPT_HOST: g1login.egc.duckdns.org
+      LETSENCRYPT_EMAIL: migbancar@alum.us.es
+      VIRTUAL_PORT: 52000
+    expose:
+      - 52000
+
+  ## CABINA WEB ##
+  # URI de acceso /cabin/{id_votacion}
+  g1_cabinaweb:
+    image: 'cabinavotacionesg1/g1_cabinaweb'
+    container_name: g1_cabinaweb
+    environment:
+      VIRTUAL_HOST: g1cabinaweb.egc.duckdns.org
+      LETSENCRYPT_HOST: g1cabinaweb.egc.duckdns.org
+      LETSENCRYPT_EMAIL: migbancar@alum.us.es
+      VIRTUAL_PORT: 52003
+    expose:
+      - 52003
+    links:
+      - g1_mariadb:mysql
+
+#Volumen para los datos del mysql, para que se guarden fuera del contenedor
+volumes:
+  db_data_g1_mariadb:
+
+networks:
+  default:
+    external:
+      name: proxy_net

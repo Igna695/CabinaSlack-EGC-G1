@@ -1,0 +1,1 @@
+Utilizar este compose para pruebas en entorno local.

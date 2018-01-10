@@ -1,0 +1,1 @@
+En caso de duda, la última versión de estos scripts siempre se encontrará en la carpeta scripts del repositorio de integración

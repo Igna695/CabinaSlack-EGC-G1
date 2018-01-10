@@ -1,0 +1,31 @@
+version: "2"
+services:
+
+
+  mysql_tomcat_dp:
+    image: 'mysql:5.5'
+    container_name: mysql_tomcat_dp
+    environment:
+      #MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_PASSWORD: wordpress
+      MYSQL_DATABASE: splc2017
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes: 
+      - ./db_dump:/docker-entrypoint-initdb.d
+      - db_data_tomcat_dp:/var/lib/mysql
+    expose:
+      - "3306"
+
+  tomcat_dp:
+    image: tomcat:8-jre8
+    container_name: tomcat_dp
+    links:
+      - mysql_tomcat_dp:mysql
+    volumes:
+      - ./war:/usr/local/tomcat/webapps
+    ports:
+      - "8083:8080"
+
+volumes:
+  db_data_tomcat_dp:

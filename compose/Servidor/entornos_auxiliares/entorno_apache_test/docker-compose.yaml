@@ -1,0 +1,18 @@
+version: "2"
+services:
+  g1apachetest:
+    image: 'httpd:2.4'
+    container_name: g1apachetest
+    environment:
+      VIRTUAL_HOST: g1apachetest.egc.duckdns.org
+      LETSENCRYPT_HOST: g1apachetest.egc.duckdns.org
+      LETSENCRYPT_EMAIL: migbancar@alum.us.es
+      #Puerto que expone el contenedor
+      #VIRTUAL_PORT: 52888
+    volumes: 
+      - ./htdocs:/usr/local/apache2/htdocs/
+
+networks:
+  default:
+    external:
+      name: proxy_net
