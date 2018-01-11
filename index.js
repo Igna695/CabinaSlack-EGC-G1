@@ -15,9 +15,38 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
   console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}`);
 });
 
-rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
-  rtm.sendMessage("/vote Gonzalo es gitano? [Si,No,Velazke]", channel);
+//rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
+//  rtm.sendMessage("/vote Gonzalo es gitano? [Si,No,Velazke]", channel);
+//});
+
+var mysql      = require('mysql');
+var queryString = '';
+
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '1234',
+  database : 'votaciones_splc'
 });
 
+connection.query('SELECT * FROM poll', function(err, rows, fields){
+	if(err) throw err;
+	
+	for(var i in rows){
+		queryString=rows[i].title;
+		}
+	});
+
+
+
+rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
+
+
+		rtm.sendMessage(queryString);
+		
+
+});
+
+connection.end();
 
 
