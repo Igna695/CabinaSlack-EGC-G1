@@ -49,26 +49,6 @@ var connection = mysql.createConnection({
 //			}
 //		});
 
-
-rtm.on(RTM_EVENTS.MESSAGE, function(message) {
-	if(message.text==='encuestas'){
-
-	connection.query('SELECT * FROM poll', function(err, rows, fields){
-		if(err) throw err;
-	
-		for(var i in rows){
-			rtm.sendMessage(rows[i].title, channel);
-			}
-	
-		});
-	}
-
-
-
-
-		
-});
-
 rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 	if(message.text==='encuestas'){
 
