@@ -1,9 +1,9 @@
 var RtmClient = require('@slack/client').RtmClient;
 var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 var RTM_EVENTS = require('@slack/client').RTM_EVENTS;
-global.token = require('./token');
+var API = process.env.SLACK_TOKEN
 
-var rtm = new RtmClient(global.token);
+var rtm = new RtmClient(API);
 rtm.start();
 
 let channel;
@@ -20,7 +20,7 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
 //});
 
 var mysql      = require('mysql');
-var queryString = '';
+var queryString = 'SELECT title FROM poll';
 
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -29,24 +29,58 @@ var connection = mysql.createConnection({
   database : 'votaciones_splc'
 });
 
-connection.query('SELECT * FROM poll', function(err, rows, fields){
-	if(err) throw err;
+//connection.query('SELECT * FROM poll', function(err, rows, fields){
+//	if(err) throw err;
 	
-	for(var i in rows){
-		queryString=rows[i].title;
-		}
-	});
+//	for(var i in rows){
+//		console.log('Poll title: ', rows[i].title);
+//		}
+//	});
 
 
 
-rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
+//rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
+
+//	connection.query('SELECT * FROM poll', function(err, rows, fields){
+//		if(err) throw err;
+	
+//		for(var i in rows){
+//			rtm.sendMessage(rows[i].title, channel);
+//			}
+//		});
 
 
-		rtm.sendMessage(queryString);
+rtm.on(RTM_EVENTS.MESSAGE, function(message) {
+	if(message.text==='encuestas'){
+
+	connection.query('SELECT * FROM poll', function(err, rows, fields){
+		if(err) throw err;
+	
+		for(var i in rows){
+			rtm.sendMessage(rows[i].title, channel);
+			}
+	
+		});
+	}
+
+
+
+
 		
-
 });
 
-connection.end();
+//connection.end();
+
+
+
+
+
+
+
+
+
+
+
+
 
 
