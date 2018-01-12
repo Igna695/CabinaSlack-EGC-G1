@@ -50,7 +50,9 @@ var connection = mysql.createConnection({
 //		});
 
 rtm.on(RTM_EVENTS.MESSAGE, function(message) {
-	if(message.text==='encuestas'){
+	var msg = message.text;
+	
+	if(msg==='encuestas'){
 
 	connection.query('SELECT * FROM poll', function(err, rows, fields){
 		if(err) throw err;
@@ -62,7 +64,23 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 		});
 	}
 
-	if(message.text==='Buenas' || message.text==='Hola'){
+if(msg.includes('get questions from poll')){
+	var pollid=msg.substring(24,msg.length);
+
+	connection.query('SELECT * FROM question where poll_id='+pollid, function(err, rows, fields){
+		if(rows.length<1){
+			rtm.sendMessage('No existe o no hay preguntas para la encuesta '+pollid, channel);
+		}
+	
+		for(var i in rows){
+			rtm.sendMessage(rows[i].title, channel);
+			}
+			
+		});
+	
+}
+
+	if(msg==='Buenas' || message.text==='Hola'){
 	rtm.sendMessage('Buenas <@'+message.user+'>. Espero que tenga un buen día', channel);
 
 }
