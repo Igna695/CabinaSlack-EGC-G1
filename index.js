@@ -4,7 +4,7 @@ var RTM_EVENTS = require('@slack/client').RTM_EVENTS;
 
 var {WebClient} = require('@slack/client');
 var API = process.env.SLACK_TOKEN
-var ayud = "Estos son los comandos disponibles en el bot: \n\n *Buenas:* el bot te saludará cordialmente. \n *get polls:* muestra un listado de las encuestas disponibles junto con su id. \n *get questions from poll x:* Muestra el listado de preguntas para una encuesta. x se corresponde con el id de la encuesta.";
+var ayud = "Estos son los comandos disponibles en el bot: \n\n *Buenas:* el bot te saludará cordialmente. \n *!polls:* muestra un listado de las encuestas disponibles junto con su id. \n *¿poll x:* Muestra el listado de preguntas para una encuesta. x se corresponde con el id de la encuesta.";
 
 
 var rtm = new RtmClient(API);
@@ -34,7 +34,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 
 	var msg = message.text;
 
-	if(msg==='get polls'){
+	if(msg==='!polls'){
 
 	connection.query('SELECT * FROM poll', function(err, rows, fields){
 		if(err) throw err;
@@ -87,8 +87,8 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 	
 	}
 
-	if(msg.includes('get questions from poll')){
-		var pollid=msg.substring(24,msg.length);
+	if(msg.includes('¿poll')){
+		var pollid=msg.substring(6,msg.length);
 
 		connection.query('SELECT * FROM question where poll_id='+pollid, function(err, rows, fields){
 			if(rows.length<1){
@@ -103,7 +103,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 
 	}
 
-	if (msg=='help' || msg==='Help'){
+	if (msg=='!help'){
 		rtm.sendMessage(ayud, channel);
 	}		
 			
