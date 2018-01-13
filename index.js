@@ -30,19 +30,69 @@ var connection = mysql.createConnection({
   database : 'votaciones_splc'
 });
 
+function getRandomColor() {
+	var letters = '0123456789ABCDEF';
+	var color = '#';
+	for (var i = 0; i < 6; i++) {
+	  color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+}
+
+var at2 ={
+	as_user: true,
+	  attachments: [
+		{
+			color:"danger",
+			text:"Viajecito",
+			fallback: "Book your flights at https://flights.example.com/book/r123456",
+			actions: [
+				{
+					type: "button",
+					text: "Book flights 🛫",
+					url: "https://flights.example.com/book/r123456",
+					style: "primary",
+					value: 1
+				},
+				{
+					type: "button",
+					text: "Cancel travel request",
+					url: "https://flights.example.com/book/r123456",
+					style: "primary",
+					value: 2
+				}
+			]
+		}
+	]
+};
+  
 rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 
 	var msg = message.text;
 
 	if(msg==='!polls'){
 
-	connection.query('SELECT * FROM poll', function(err, rows, fields){
-		if(err) throw err;
-	
-		for(var i in rows){
-			rtm.sendMessage('*ID:* '+rows[i].id+' -- *Encuesta:* '+rows[i].title, channel);
-		}
-	
+		connection.query('SELECT * FROM poll', function(err, rows, fields){
+			if(err){ throw err;}
+			var ar = [];
+
+			for(var i in rows){
+				var aux = { color: getRandomColor(),
+							 text: "*Nº "+ rows[i].id + "* - " + rows[i].title+"",
+							 fallback:"",
+							 mrkdwn_in:["text"]};			 
+				ar.push(aux);
+			}
+
+			var res = ar;	
+
+			var at ={
+				as_user: true,
+				attachments: res
+			};
+
+			return	web.chat.postMessage(message.channel, '', at);
+		
 		});
 	}
 
@@ -54,31 +104,20 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 	web.chat.postMessage(API, channel, 'hola');
 	rtm.sendMessage('Buenas <@'+message.user+'>. Espero que tenga un buen día', channel);
 	}
-
+	
 	if(msg==='button'){
-		var at ={
+		var at1 ={
 			as_user: true,
-      		attachments: [
+			  attachments: [
 				{
-					color:"red",
+					color:'danger',
 					text:"Viajecito",
-					fallback: "Book your flights at https://flights.example.com/book/r123456",
-					actions: [
-						{
-							type: "button",
-							text: "Book flights 🛫",
-							url: "https://flights.example.com/book/r123456",
-							style: "primary",
-							value: 1
-						},
-						{
-							type: "button",
-							text: "Cancel travel request",
-							url: "https://flights.example.com/book/r123456",
-							style: "primary",
-							value: 2
-						}
-					]
+					fallback: "Book your flights at https://flights.example.com/book/r123456"
+					
+				},{
+					color:"primary",
+					text:"despacito",
+					fallback:"chulito"
 				}
 			]
 		};
@@ -88,17 +127,31 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 	}
 
 	if(msg.includes('¿poll')){
+
 		var pollid=msg.substring(6,msg.length);
 
 		connection.query('SELECT * FROM question where poll_id='+pollid, function(err, rows, fields){
 			if(rows.length<1){
 				rtm.sendMessage('No existe o no hay preguntas para la encuesta '+pollid, channel);
 			}
-		
+
+			var ar = [];
+
 			for(var i in rows){
-				rtm.sendMessage(rows[i].title, channel);
+				var aux = { color: getRandomColor(),
+							 text: rows[i].title,
+							 fallback:""};			 
+				ar.push(aux);
 			}
-				
+
+			var res = ar;	
+
+			var at ={
+				as_user: true,
+				attachments: res
+			};
+
+			return	web.chat.postMessage(message.channel, '', at);
 		});
 
 	}
