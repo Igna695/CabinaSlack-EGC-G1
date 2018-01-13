@@ -7,6 +7,7 @@ var API = process.env.SLACK_TOKEN
 var ayud = "Estos son los comandos disponibles en el bot: \n\n *Buenas:* el bot te saludará cordialmente. \n *!polls:* muestra un listado de las encuestas disponibles junto con su id. \n *¿poll x:* Muestra el listado de preguntas para una encuesta. x se corresponde con el id de la encuesta.";
 
 
+
 var rtm = new RtmClient(API);
 rtm.start();
 
@@ -26,15 +27,15 @@ var queryString = 'SELECT title FROM poll';
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : '1234',
+  password : 'hola',
   database : 'votaciones_splc'
 });
 
 rtm.on(RTM_EVENTS.MESSAGE, function(message) {
-
 	var msg = message.text;
 
 	if(msg==='!polls'){
+
 
 	connection.query('SELECT * FROM poll', function(err, rows, fields){
 		if(err) throw err;
@@ -51,6 +52,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 	}
 
 	if(msg==='Buenas' || msg==='Hola'){
+
 	web.chat.postMessage(API, channel, 'hola');
 	rtm.sendMessage('Buenas <@'+message.user+'>. Espero que tenga un buen día', channel);
 	}
@@ -68,15 +70,13 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 							type: "button",
 							text: "Book flights 🛫",
 							url: "https://flights.example.com/book/r123456",
-							style: "primary",
-							value: 1
+							style: "primary"
 						},
 						{
 							type: "button",
 							text: "Cancel travel request",
-							url: "https://flights.example.com/book/r123456",
 							style: "primary",
-							value: 2
+							url: "https://requests.example.com/cancel/r123456",
 						}
 					]
 				}
