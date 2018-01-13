@@ -26,11 +26,13 @@ var queryString = 'SELECT title FROM poll';
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'hola',
+  password : '1234',
   database : 'votaciones_splc'
 });
 
 rtm.on(RTM_EVENTS.MESSAGE, function(message) {
+
+	var msg = message.text;
 
 	if(msg==='get polls'){
 
@@ -39,21 +41,21 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 	
 		for(var i in rows){
 			rtm.sendMessage('*ID:* '+rows[i].id+' -- *Encuesta:* '+rows[i].title, channel);
-			}
+		}
 	
 		});
 	}
 
-	if(message.text.includes('Benavides')||message.text.includes('benavide')||message.text.includes('benavides')){
+	if(msg.includes('Benavides')||msg.includes('benavide')||msg.includes('benavides')){
 		rtm.sendMessage('Be careful my friend <@'+message.user+'>. El profesor podría estar en esta sala.', channel);
 	}
 
-	if(message.text==='Buenas' || message.text==='Hola'){
+	if(msg==='Buenas' || msg==='Hola'){
 	web.chat.postMessage(API, channel, 'hola');
 	rtm.sendMessage('Buenas <@'+message.user+'>. Espero que tenga un buen día', channel);
 	}
 
-	if(message.text==='button'){
+	if(msg==='button'){
 		var at ={
 			as_user: true,
       		attachments: [
@@ -66,13 +68,15 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 							type: "button",
 							text: "Book flights 🛫",
 							url: "https://flights.example.com/book/r123456",
-							style: "primary"
+							style: "primary",
+							value: 1
 						},
 						{
 							type: "button",
 							text: "Cancel travel request",
-							url: "https://requests.example.com/cancel/r123456",
-							style: "danger"
+							url: "https://flights.example.com/book/r123456",
+							style: "primary",
+							value: 2
 						}
 					]
 				}
