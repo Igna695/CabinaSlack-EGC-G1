@@ -27,7 +27,7 @@ var queryString = 'SELECT title FROM poll';
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'hola',
+  password : '1234',
   database : 'votaciones_splc'
 });
 
