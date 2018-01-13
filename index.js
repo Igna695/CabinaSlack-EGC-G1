@@ -7,6 +7,7 @@ var API = process.env.SLACK_TOKEN
 var ayud = "Estos son los comandos disponibles en el bot: \n\n *Buenas:* el bot te saludará cordialmente. \n *!polls:* muestra un listado de las encuestas disponibles junto con su id. \n *¿poll x:* Muestra el listado de preguntas para una encuesta. x se corresponde con el id de la encuesta.";
 
 
+
 var rtm = new RtmClient(API);
 rtm.start();
 
@@ -41,7 +42,7 @@ function getRandomColor() {
 
 var at2 ={
 	as_user: true,
-	  attachments: [
+	attachments: [
 		{
 			color:"danger",
 			text:"Viajecito",
@@ -67,7 +68,6 @@ var at2 ={
 };
   
 rtm.on(RTM_EVENTS.MESSAGE, function(message) {
-
 	var msg = message.text;
 
 	if(msg==='!polls'){
@@ -92,7 +92,6 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 			};
 
 			return	web.chat.postMessage(message.channel, '', at);
-		
 		});
 	}
 
@@ -101,6 +100,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 	}
 
 	if(msg==='Buenas' || msg==='Hola'){
+
 	web.chat.postMessage(API, channel, 'hola');
 	rtm.sendMessage('Buenas <@'+message.user+'>. Espero que tenga un buen día', channel);
 	}
@@ -112,12 +112,21 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 				{
 					color:'danger',
 					text:"Viajecito",
-					fallback: "Book your flights at https://flights.example.com/book/r123456"
-					
-				},{
-					color:"primary",
-					text:"despacito",
-					fallback:"chulito"
+					fallback: "Book your flights at https://flights.example.com/book/r123456",
+					actions: [
+						{
+							type: "button",
+							text: "Book flights 🛫",
+							url: "https://flights.example.com/book/r123456",
+							style: "primary"
+						},
+						{
+							type: "button",
+							text: "Cancel travel request",
+							style: "primary",
+							url: "https://requests.example.com/cancel/r123456",
+						}
+					]
 				}
 			]
 		};
@@ -138,6 +147,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 			var ar = [];
 
 			for(var i in rows){
+
 				var aux = { color: getRandomColor(),
 							 text: rows[i].title,
 							 fallback:""};			 
