@@ -96,7 +96,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 			}
 		
 			for(var i in rows){
-				rtm.sendMessage(rows[i].title, channel);
+				rtm.sendMessage('*- '+rows[i].title+':* '+rows[i].description+'\n', channel);
 			}
 				
 		});
