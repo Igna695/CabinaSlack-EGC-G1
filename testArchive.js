@@ -52,15 +52,46 @@ connection.connect(function(err) {
     console.log('TEST OK');
 });
 
+
+//Test del comando Buenas/Hola
 rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function(message) {
 var msg;
 
     msg = 'Buenas';
     rtm.sendMessage('Buenas', channel);
-    //Test del comando Buenas/Hola
+    
     if(msg==='Buenas' || msg==='Hola'){
         console.log('\nTest del comando Buenas');
         rtm.sendMessage('Buenas. Espero que tenga un buen día', channel);
         console.log('TEST OK');
+        }else
+        console.log('TEST FALLIDO');
+});
+
+//Test del comando ¿poll
+rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function(message) {
+    var msg2;
+    
+        msg2 = '¿poll';
+        rtm.sendMessage('¿poll', channel);
+        
+        if(msg2==='¿poll'){
+            console.log('\nTest del comando ¿poll');
+            connection.query('SELECT * FROM question where poll_id='+1, function(err, rows, fields){
+                if(err){
+                    console.error('Error al hacer SELECT de la base de datos'+ err.stack);
+                    console.log('TEST FALLIDO');
+                }
+                if(rows.length<1){
+                    rtm.sendMessage('No existe o no hay preguntas para la encuesta '+msg2, channel);     
+                    console.log('TEST OK');
+                }
+            for(var i in rows){
+                rtm.sendMessage('*- '+rows[i].title+':* '+rows[i].description+'\n', channel);
+            }
+            console.log('TEST OK');
+            
+        
+            });
         }
 });
