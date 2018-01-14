@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/jshint/bin/jshint index.js"
+    "test": "./node_modules/jshint/bin/jshint testArchive.js"
   },
   "repository": {
     "type": "git",
