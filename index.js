@@ -9,6 +9,7 @@ var palabras = ['cabron','capullo','gilipollas','idiota','sexo','puta','tus muer
 rtm.start();
 
 let channel;
+var map = new Map();
 
 rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
 
@@ -129,13 +130,14 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 			attachments: [
 				{
 					color: "#ff9900",
-					text:"*Comandos disponibles:*",
+					title: "!help",
+					text:"Comandos disponibles:",
 					fallback: "",
 					mrkdwn_in:["text"]
 				},
 				{
 					color: getRandomColor(),
-					text:"*Buenas:* EGC_bot te saludará cordialmente.",
+					text:"*Buenas u Hola:* EGC_bot te saludará cordialmente.",
 					fallback: "",
 					mrkdwn_in:["text"]
 				},
@@ -162,12 +164,49 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 					text:"*!splc:* Página principal de integración del proyecto.",
 					fallback: "",
 					mrkdwn_in:["text"]
+				},
+				{
+					color: getRandomColor(),
+					text:"*!plan:* El bot le enviará por privado un PDF con la planificación de la asignatura.",
+					fallback: "",
+					mrkdwn_in:["text"]
+				},
+				{
+					color: "danger",
+					text:"*Recuerde siempre moderar su lenguaje.*",
+					fallback: "",
+					mrkdwn_in:["text"]
 				}
 				
 			]
 		};
 
 		return	web.chat.postMessage(message.channel, '', ayud);
+	}
+
+	if(msg==='!plan'){
+
+		var priv ={
+			as_user: true,
+			attachments: [
+				{
+					color: "#ff9900",
+					text:"Hitos y fechas importantes en la planificación de la asignatura. ",
+					fallback: "",
+					title: "Planificación EGC",
+					footer: "Universidad de Sevilla - ETSII",
+					footer_icon: "http://iwt2.org/isd2013/images/logo-ETSII.png",
+					actions: [
+						{
+							type: "button",
+							text: "PDF",
+							url: "https://1984.lsi.us.es/wiki-egc/images/egc/2/26/00-EGC_-_Planificacion1718.pdf",
+							style: "primary"
+						}
+					]
+				}]
+			};
+		return	web.chat.postMessage(message.user, '', priv);
 	}
 	
 	if(msg==="!splc"){
@@ -181,6 +220,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 					text:"Acceda con su usuario y contraseña a la página principal de la integración del proyecto donde se mostrarán de forma gráfica los resultados de las encuestas.",
 					fallback: "",
 					footer: "Equipo de integración.",
+					footer_icon: "https://pbs.twimg.com/profile_images/739737210812010496/5doexA25.jpg",
 					actions: [
 						{
 							type: "button",
@@ -220,14 +260,17 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 			  attachments: [
 				{
 					color:"#ff9900",
-					text:"WIKI EGC",
+					title: "Wiki EGC",
+					text: "Página principal de la asignatura.",
 					fallback: "",
+					footer: "Evolución y gestión de la configuración.",
+					footer_icon: "http://iwt2.org/isd2013/images/logo-ETSII.png",
 					actions: [
 						{
 							type: "button",
 							text: "Inicio",
+							style: "danger",
 							url: "https://1984.lsi.us.es/wiki-egc/index.php/2017/2018",
-							style: "primary"
 						},
 						{
 							type: "button",
