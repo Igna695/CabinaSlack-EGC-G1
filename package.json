@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "testArchive.js"
+    "test": "./node_modules/.bin/ava testArchive.js",
   },
   "repository": {
     "type": "git",
