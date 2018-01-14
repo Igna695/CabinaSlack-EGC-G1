@@ -112,3 +112,28 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function(message) {
             });
         }
 });
+
+
+//Test del comando !poll
+rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function(message) {
+    var msg4;
+    
+    msg4 = '!polls';
+    rtm.sendMessage(msg4, channel);
+	if(msg4==='!polls'){
+        console.log('\nTest del comando !poll');
+
+        connection.query('SELECT * FROM poll', function(err, rows, fields){
+            if(err){
+                console.error('Error al hacer SELECT de la base de datos'+ err.stack);
+                console.log('TEST FALLIDO');
+            }
+        
+            for(var i in rows){
+                rtm.sendMessage('*ID:* '+rows[i].id+' -- *Encuesta:* '+rows[i].title, channel);
+            }
+            console.log('TEST OK');
+        
+        });
+    }
+});
