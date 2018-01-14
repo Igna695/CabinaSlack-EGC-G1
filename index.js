@@ -5,7 +5,7 @@ var {WebClient} = require('@slack/client');
 var API = process.env.SLACK_TOKEN
 var rtm = new RtmClient(API);
 var web = new WebClient(API);
-
+var palabras = ['cabron','capullo','gilipollas','idiota','sexo','puta','tus muertos','subnormal','tonto','mierda','retrasado'];
 rtm.start();
 
 let channel;
@@ -43,7 +43,23 @@ function getRandomColor() {
 
 	return color;
 }
-  
+
+function containsPalabra(mesg,pal) {
+	var res = false;
+	for (var i = 0; i<pal.length ; i++) {
+	  res = mesg.includes(pal[i]);
+	  if(res===true){
+		  var aux=true;
+	  }
+	}
+	if(aux===true){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
 rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 	var msg = message.text;
 
@@ -112,31 +128,31 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 			as_user: true,
 			attachments: [
 				{
-					color:"danger",
+					color: "#ff9900",
 					text:"*Comandos disponibles:*",
 					fallback: "",
 					mrkdwn_in:["text"]
 				},
 				{
-					color:"#ADFF2F",
+					color: getRandomColor(),
 					text:"*Buenas:* EGC_bot te saludará cordialmente.",
 					fallback: "",
 					mrkdwn_in:["text"]
 				},
 				{
-					color:"#ADFF2F",
+					color: getRandomColor(),
 					text:"*!wiki:* Enlaces a cada uno de los apartados de la wiki.  ",
 					fallback: "",
 					mrkdwn_in:["text"]
 				},
 				{
-					color:"#ADFF2F",
+					color: getRandomColor(),
 					text:"*!polls:* Listado de las encuestas disponibles con su identificativo.",
 					fallback: "",
 					mrkdwn_in:["text"]
 				},
 				{
-					color:"#ADFF2F",
+					color: getRandomColor(),
 					text:"*¿poll x:* Listado de respuestas para la encuesta número 'x'. ",
 					fallback: "",
 					mrkdwn_in:["text"]
@@ -146,7 +162,50 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 		};
 
 		return	web.chat.postMessage(message.channel, '', ayud);
-	}		
+	}
+	
+	if(msg==="!splc"){
+
+		var votaciones ={
+			as_user: true,
+			attachments: [
+				{
+					color:"#ff9900",
+					title: "WEB SPLC",
+					text:"Acceda con su usuario y contraseña a la página principal de la integración del proyecto donde se mostrarán de forma gráfica los resultados de las encuestas.",
+					fallback: "",
+					footer: "Equipo de integración.",
+					actions: [
+						{
+							type: "button",
+							text: "Página Principal",
+							url: "https://g1login.egc.duckdns.org/login",
+							style: "primary"
+						}
+					]
+				}
+			]
+		};
+
+		return	web.chat.postMessage(message.channel, '', votaciones);
+	}
+
+	if(containsPalabra(msg,palabras)){
+
+		var res ={
+			as_user: true,
+			attachments: [
+				{
+					color:"danger",
+					text:"*Por favor, <@"+message.user+"> modere su vocabulario o será expulsado del canal.*",
+					fallback: "",
+					mrkdwn_in:["text"]
+				}
+			]
+		};
+
+		return	web.chat.postMessage(message.channel, '', res);
+	}
 	
 	if (msg=='!wiki'){
 
