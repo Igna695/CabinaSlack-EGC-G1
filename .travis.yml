@@ -10,9 +10,14 @@ before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS votaciones_splc;'
   - mysql -u root --default-character-set=utf8 votaciones_splc < db_dump/script_create_votaciones_splc.sql
   - mysql -u root --default-character-set=utf8 votaciones_splc < db_dump/splc2017.sql
-install: 
+install:
   - npm install
+  - npm add request
+  - npm install mysql
 before_script:
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('your_password') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
+cache:
+ directories:
+    - node_modules
 script: 
-  - npm test testArchive.js
+  - npm run test
