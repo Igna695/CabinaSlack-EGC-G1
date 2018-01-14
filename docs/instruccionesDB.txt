@@ -26,5 +26,6 @@ sudo docker exec -it mariadb_mysql_1 mysql -uroot -p
 para ver los contenedores y sus nombres:
 sudo docker ps
 
+
 para eliminar un contenedor:
 sudo docker kill nombreDB

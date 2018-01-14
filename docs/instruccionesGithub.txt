@@ -13,6 +13,7 @@ git push --set-upstream CabinaSlack-EGC-G1 nombreRama
 To do an update:
 git pull https://github.com/Proyecto-EGC-G1/CabinaSlack-EGC-G1
 
+
 //in case of overwritten error do the next:
 git clean -d -fx ""
 git pull https://github.com/Proyecto-EGC-G1/CabinaSlack-EGC-G1
