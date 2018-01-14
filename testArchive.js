@@ -58,7 +58,7 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function(message) {
 var msg;
 
     msg = 'Buenas';
-    rtm.sendMessage('Buenas', channel);
+    rtm.sendMessage(msg, channel);
     
     if(msg==='Buenas' || msg==='Hola'){
         console.log('\nTest del comando Buenas');
@@ -68,12 +68,29 @@ var msg;
         console.log('TEST FALLIDO');
 });
 
+
+//Test del comando !help
+rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function(message) {
+    var msg3;
+    
+        msg3 = '!help';
+        rtm.sendMessage(msg3, channel);
+
+        if (msg3==='!help'){
+            console.log('\nTest del comando !help');
+            rtm.sendMessage(ayud, channel);
+            console.log('TEST OK');
+        }else 
+        console.log('TEST FALLIDO');	
+
+});
+
 //Test del comando ¿poll
 rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function(message) {
     var msg2;
     
         msg2 = '¿poll';
-        rtm.sendMessage('¿poll', channel);
+        rtm.sendMessage(msg2, channel);
         
         if(msg2==='¿poll'){
             console.log('\nTest del comando ¿poll');
