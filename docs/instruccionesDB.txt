@@ -1,8 +1,30 @@
+sudo apt-get install docker
+sudo apt-get install curl
+sudo curl -L https://github.com/docker/compose/releases/download/1.18.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+Si te sale el error del Docker daemon:
+sudo apt-get update
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-ke
+ys 58118E89F3A912897C070ADBF76221572C52609D
+sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xeni
+al main'
+sudo apt.get update
+apt cache policy docker-engine
+sudo apt-get install -y docker-engine
+sudo apt.get update
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-ke
+ys 58118E89F3A912897C070ADBF76221572C52609D
+sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xeni
+al main'
+sudo apt.get update
+
+
 sudo docker-compose up -d --build
 sudo docker exec -it mariadb_mysql_1 mysql -uroot -p
 
-To see the containers and their names:
+para ver los contenedores y sus nombres:
 sudo docker ps
 
-To delete a container:
+para eliminar un contenedor:
 sudo docker kill nombreDB

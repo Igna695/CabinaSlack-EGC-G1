@@ -4,6 +4,7 @@ git status
 git config --global user.email "emailUsuario"
 git config --global user.name "nombreUsuario"
 git remote add CabinaSlack-EGC-G1 https://github.com/Proyecto-EGC-G1/CabinaSlack-EGC-G1
+o git add -A
 git pull CabinaSlack-EGC-G1 nombreRama
 git commit -m "descripcion commit"
 git push --set-upstream CabinaSlack-EGC-G1 nombreRama
