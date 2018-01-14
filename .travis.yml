@@ -5,7 +5,6 @@ node_js:
 services:
   - mysql
   - docker
-  - mariadb
 before_script:
   - echo "USE mysql;\nUPDATE user SET password=PASSWORD('your_password') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
 before_install: 
