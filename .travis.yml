@@ -1,10 +1,12 @@
 language: node_js
 sudo: required
 node_js:
-  - "9"  
+  - "8" 
+  - "9" 
+  - "node"
 install:
   - npm install
-script: js.index ./CabinaSlack-EGC-G1/index.js
+script: npm index index.js
 services:
   - mysql
   - docker
