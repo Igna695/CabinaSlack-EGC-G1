@@ -156,6 +156,12 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 					text:"*¿poll x:* Listado de respuestas para la encuesta número 'x'. ",
 					fallback: "",
 					mrkdwn_in:["text"]
+				},
+				{
+					color: getRandomColor(),
+					text:"*!splc:* Página principal de integración del proyecto.",
+					fallback: "",
+					mrkdwn_in:["text"]
 				}
 				
 			]
