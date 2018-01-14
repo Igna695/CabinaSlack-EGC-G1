@@ -6,6 +6,10 @@
   "scripts": {
     "test": "./node_modules/.bin/ava testArchive.js",
   },
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "eslint": "^3.19.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Proyecto-EGC-G1/CabinaSlack-EGC-G1.git"
