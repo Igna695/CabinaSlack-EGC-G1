@@ -1,5 +1,5 @@
 FROM node:latest
-WORKDIR /DOCKEREGC/slackbot
+WORKDIR /slackbot
 RUN npm install
 RUN npm install @slack/client
 RUN npm install mysql
