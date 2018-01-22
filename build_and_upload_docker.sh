@@ -2,15 +2,15 @@
 
 if [ "$TRAVIS_BRANCH" = "master" ]
 	then
-		docker build -t bot_slack .
+		docker build -t appbot .
 
 		export DOCKER_ID_USER=egc1718
 
 		docker login --username=egc1718 --password=madre1960
 
-		docker tag bot_slack $DOCKER_ID_USER/bot_slack
+		docker tag appbot $DOCKER_ID_USER/appbot
 
-		docker push $DOCKER_ID_USER/bot_slack
+		docker push $DOCKER_ID_USER/appbot
 
 fi
 
