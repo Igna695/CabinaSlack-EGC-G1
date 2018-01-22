@@ -4,7 +4,7 @@ if [ "$TRAVIS_BRANCH" = "master" ]
 	then
 		docker build -t appbot .
 
-		export DOCKER_ID_USER=egc1718
+		DOCKER_ID_USER=egc1718
 
 		docker login --username=egc1718 --password=madre1960
 
