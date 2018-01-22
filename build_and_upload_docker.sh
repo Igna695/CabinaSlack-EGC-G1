@@ -8,7 +8,7 @@ if [ "$TRAVIS_BRANCH" = "master" ]
 
 		docker login --username=egc1718 --password=madre1960
 
-		docker tag login_egc $DOCKER_ID_USER/bot_slack
+		docker tag bot_slack $DOCKER_ID_USER/bot_slack
 
 		docker push $DOCKER_ID_USER/bot_slack
 
