@@ -2,7 +2,7 @@
 
 if [ "$TRAVIS_BRANCH" = "master" ]
 	then
-		docker build -t appbot .
+		docker build -t egc1718/appbot .
 
 		DOCKER_ID_USER=egc1718
 
