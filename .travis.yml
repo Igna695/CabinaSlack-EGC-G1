@@ -10,6 +10,7 @@ before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS votaciones_splc;'
   - mysql -u root --default-character-set=utf8 votaciones_splc < db_dump/script_create_votaciones_splc.sql
   - mysql -u root --default-character-set=utf8 votaciones_splc < db_dump/splc2017.sql
+  - mysql -u root --default-character-set=utf8 votaciones_splc < db_dump/script_populate_votaciones_splc.sql
 install:
   - npm install
   - npm add request
