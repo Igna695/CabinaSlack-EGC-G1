@@ -12,3 +12,5 @@ RUN npm install mysql
 
 EXPOSE 52007
 CMD ["npm","start"]
+
+
