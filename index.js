@@ -90,7 +90,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 	}
 
 	if(msg==='Buenas' || msg==='Hola'){
-		rtm.sendMessage('Buenas <@'+message.user+'>. Espero que tenga un buen día', channel);
+		rtm.sendMessage('Buenas <@'+message.user+'>. Espero que tenga un buen día', message.channel);
 	}
 
 	if(msg.startsWith('¿poll')){
@@ -99,7 +99,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message) {
 
 		connection.query('SELECT * FROM question where poll_id='+pollid, function(err, rows, fields){
 			if(rows.length<1){
-				rtm.sendMessage('No existe o no hay preguntas para la encuesta '+pollid, channel);
+				rtm.sendMessage('No existe o no hay preguntas para la encuesta '+pollid, message.channel);
 			}
 
 			var ar = [];
