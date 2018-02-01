@@ -2,11 +2,13 @@
 
 if [ "$TRAVIS_BRANCH" = "master" ]
 	then
-		docker build -t bot_slack .
 
-		export DOCKER_ID_USER=egc1718
+		docker build -t bot_slack https://github.com/Igna695/CabinaSlack-EGC-G1
 
-		docker login --username=egc1718 --password=madre1960
+		DOCKER_ID_USER=$DOCKER_USER
+
+		docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD
+
 
 		docker tag bot_slack $DOCKER_ID_USER/bot_slack
 
@@ -19,5 +21,4 @@ if [ "$TRAVIS_BRANCH" = "develop" ]
 		echo "No es la rama master."
 
 fi
-
 

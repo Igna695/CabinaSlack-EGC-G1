@@ -1,8 +1,0 @@
-sudo docker-compose up -d --build
-sudo docker exec -it mariadb_mysql_1 mysql -uroot -p
-
-To see the containers and their names:
-sudo docker ps
-
-To delete a container:
-sudo docker kill nombreDB
