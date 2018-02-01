@@ -9,6 +9,5 @@ test('Probando node', t => {
 
  //Test de selección de todas las polls
  test('Probando conexion', c=>{
-    connection.query('SELECT * FROM poll', function(err, rows, fields)){
     c.true(true);
-}});
+});
