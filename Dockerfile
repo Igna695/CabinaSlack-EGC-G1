@@ -1,5 +1,5 @@
 FROM node:latest
-WORKDIR /DOCKEREGC/slackbot
+WORKDIR /slackbotfinal
 
 COPY slackbot/* ./
 
