@@ -1,7 +1,7 @@
 FROM node:latest
 WORKDIR /slackbotfinal
 
-COPY slackbot/* ./
+COPY slackbotfinal/* ./
 
 ENV DATABASE_URL g1_mariadb
 ENV DATABASE_PORT 3306
