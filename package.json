@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/ava testArchive.js"
+    "test": "./node_modules/.bin/ava slackbot/testArchive.js"
   },
   "devDependencies": {
     "ava": "^0.19.1",
