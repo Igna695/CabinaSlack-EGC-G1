@@ -4,9 +4,9 @@ if [ "$TRAVIS_BRANCH" = "master" ]
 	then
 		docker build -t bot_slack https://github.com/Igna695/CabinaSlack-EGC-G1
 
-		DOCKER_ID_USER=egc1718
+		DOCKER_ID_USER=$DOCKER_USER
 
-		docker login --username=egc1718 --password=madre1960
+		docker login --username=$DOCKER_USER --password=$DOCKER_PASSWORD
 
 		docker tag bot_slack $DOCKER_ID_USER/bot_slack
 
