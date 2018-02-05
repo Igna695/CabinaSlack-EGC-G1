@@ -23,8 +23,7 @@ cache:
     - node_modules
 script: 
   - npm run test
-
- # - bash build_and_upload_docker.sh
+  - bash build_and_upload_docker.sh
 
 
 branches:
