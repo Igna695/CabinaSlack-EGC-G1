@@ -3,7 +3,7 @@
 if [ "$TRAVIS_BRANCH" = "master" ]
 	then
 
-		docker build -t bot_slack https://github.com/Igna695/CabinaSlack-EGC-G1
+		docker build -t bot_slack .
 
 		DOCKER_ID_USER=$DOCKER_USER
 
